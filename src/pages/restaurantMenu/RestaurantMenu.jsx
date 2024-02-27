@@ -1,47 +1,48 @@
-import React, { useEffect, useState } from "react";
-import { Collapse } from "antd";
-import { RES_MENU_API } from "../../utils/constant";
-import { useParams } from "react-router";
-import { StarFilled } from "@ant-design/icons";
+import React, {useEffect, useState} from "react";
+import {Collapse} from "antd";
+import {RES_MENU_API} from "../../utils/constant";
+import {useParams} from "react-router";
+import {StarFilled} from "@ant-design/icons";
 import "./restaurantMenu.css";
-import { BASE_IMG_URL } from "../../utils/constant";
+import {BASE_IMG_URL} from "../../utils/constant";
 import MenuSkelton from "../../components/menuSkelton/MenuSkelton";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
   addTocart,
   setCurremtRestaurant,
   removeFromcart,
 } from "../../redux/slices/cartslice";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import {ARRAY_OF_MENU_OF_RESTAURANTS} from "../../../__mocks__/dataMock";
 
 const RestaurantMenu = () => {
-  const [resMenuData, setResMenuData] = useState(null);
+  const resMenuData = ARRAY_OF_MENU_OF_RESTAURANTS;
+  console.log("res menu", resMenuData);
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const cart_Item = useSelector((state) => state.cartslice.cart);
-  const is_login_user = useSelector(
-    (state) => state.userslice.currentLoginUser
-  );
+  const cart_Item = useSelector(state => state.cartslice.cart);
+  const is_login_user = useSelector(state => state.userslice.currentLoginUser);
 
-  const { resId } = params;
+  const {resId} = params;
 
-  useEffect(() => {
-    fetchResMenuData();
-  }, []);
+  // useEffect(() => {
+  //   fetchResMenuData();
+  // }, []);
 
-  const fetchResMenuData = async () => {
-    const data = await fetch(`${RES_MENU_API}&restaurantId=${resId}`);
-    const json = await data.json();
-    setResMenuData(json);
-  };
+  // const fetchResMenuData = async () => {
+  //   const data = await fetch(`${RES_MENU_API}&restaurantId=${resId}`);
+  //   const json = await data.json();
+  //   setResMenuData(json);
+  //   console.log(json);
+  // };
 
-  if (resMenuData === null) return <MenuSkelton />;
+  if (resMenuData?.length == 0) return <MenuSkelton />;
 
-  const resData = resMenuData?.data?.cards[0].card.card.info;
+  const resData = resMenuData;
 
-  const handleCart = (item) => {
+  const handleCart = item => {
     if (is_login_user) {
       dispatch(addTocart(item?.card?.info));
       dispatch(setCurremtRestaurant(resData));
@@ -52,14 +53,14 @@ const RestaurantMenu = () => {
 
   const food_item =
     resMenuData?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards
-      .filter((item) => item?.card?.card?.itemCards !== undefined)
+      .filter(item => item?.card?.card?.itemCards !== undefined)
       .map((item, index) => {
         return {
           key: `${index + 1}`,
           label: `${item?.card?.card?.title} (${item?.card?.card?.itemCards.length})`,
-          children: item?.card?.card?.itemCards.map((item) => {
+          children: item?.card?.card?.itemCards.map(item => {
             const item_data = cart_Item?.find(
-              (food) => food.id === item?.card?.info?.id
+              food => food.id === item?.card?.info?.id
             );
             const in_cart_item = item_data?.qty;
             if (in_cart_item) {
