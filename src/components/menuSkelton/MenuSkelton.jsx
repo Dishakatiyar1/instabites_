@@ -1,4 +1,4 @@
-import { Collapse, Skeleton } from "antd";
+import {Collapse, Skeleton} from "antd";
 import React from "react";
 import "./menuSkelton.css";
 
@@ -6,7 +6,7 @@ const MenuSkelton = () => {
   const items = [
     {
       key: "1",
-      label: "Recommanded",
+      label: "Recommended",
       children: <Skeleton active={true} />,
     },
     {

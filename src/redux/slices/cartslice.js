@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
   cart: [],
@@ -10,29 +10,27 @@ const cartslice = createSlice({
   initialState,
   reducers: {
     addTocart: (state, action) => {
-      const isItems = state.cart.find((item) => item?.id === action.payload.id);
+      const isItems = state.cart.find(item => item?.id === action.payload.id);
       if (isItems) {
         isItems.qty++;
       } else {
-        state.cart.push({ ...action.payload, qty: 1 });
+        state.cart.push({...action.payload, qty: 1});
       }
     },
     removeFromcart: (state, action) => {
-      const isItems = state.cart.find(
-        (item) => item?.id === action?.payload?.id
-      );
+      const isItems = state.cart.find(item => item?.id === action?.payload?.id);
       if (isItems) {
         if (isItems.qty > 1) {
           isItems.qty--;
         } else {
-          const filetr_item = state.cart.filter(
-            (item) => item?.id !== action?.payload?.id
+          const filter_item = state.cart.filter(
+            item => item?.id !== action?.payload?.id
           );
-          state.cart = filetr_item;
+          state.cart = filter_item;
         }
       }
     },
-    setEmptyCart: (state) => {
+    setEmptyCart: state => {
       state.cart = [];
     },
     setCurremtRestaurant: (state, action) => {
@@ -41,7 +39,7 @@ const cartslice = createSlice({
   },
 });
 
-export const { addTocart, setCurremtRestaurant, removeFromcart, setEmptyCart } =
+export const {addTocart, setCurremtRestaurant, removeFromcart, setEmptyCart} =
   cartslice.actions;
 
 export default cartslice.reducer;

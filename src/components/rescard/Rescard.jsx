@@ -1,19 +1,25 @@
 import React from "react";
-import { Card } from "antd";
+import {Card} from "antd";
 import "./rescard.css";
-import { StarFilled } from "@ant-design/icons";
-import { BASE_IMG_URL } from "../../utils/constant";
-import { Link } from "react-router-dom";
+import {StarFilled} from "@ant-design/icons";
+import {BASE_IMG_URL} from "../../utils/constant";
+import {Link} from "react-router-dom";
 
-const Rescard = (props) => {
-  const { resdata } = props;
-  const { avgRating, cloudinaryImageId, sla, name, id, cuisines, costForTwo } =
-    resdata.info;
+const Rescard = props => {
+  const {
+    avgRating,
+    cloudinaryImageId,
+    slaString,
+    name,
+    id,
+    cuisines,
+    costForTwo,
+  } = props;
   return (
     <Link className="cardLink" to={`restaurant/${id}`}>
       <Card
         hoverable
-        style={{ width: 300 }}
+        style={{width: 300}}
         cover={
           <img
             alt="example"
@@ -31,8 +37,8 @@ const Rescard = (props) => {
             <StarFilled />
             <span>{avgRating}</span>
           </div>
-          <p className="delivery-time">{sla?.slaString}</p>
-          <p className="delivery-time">{costForTwo}</p>
+          <p className="delivery-time">{slaString}</p>
+          <p className="delivery-time">₹ {Math.floor(costForTwo / 100)}</p>
         </div>
       </Card>
     </Link>
