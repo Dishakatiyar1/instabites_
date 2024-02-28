@@ -1,12 +1,12 @@
 import React from "react";
 import "./accordian.css";
-import { Collapse } from "antd";
+import {Collapse} from "antd";
 
 const FaqAccordian = () => {
   const items = [
     {
       key: "1",
-      label: "What is Foodie Customer Care Number?",
+      label: "What is Instabites Customer Care Number?",
       children: (
         <p>
           We value our customer’s time and hence moved away from a single
@@ -15,11 +15,11 @@ const FaqAccordian = () => {
           of an IVRS call support. Just search for your issue in the help
           section on this page and initiate a chat with us. A customer care
           executive will be assigned to you shortly. You can also email us your
-          issue on support@foodie.in Note: We value your privacy and your
+          issue on support@instabites.in Note: We value your privacy and your
           information is safe with us. Please do not reveal any personal
-          information, bank account number, OTP etc. to another person. A foodie
-          representative will never ask you for these details. Please do not
-          reveal these details to fraudsters and imposters claiming to be
+          information, bank account number, OTP etc. to another person. A
+          Instabites representative will never ask you for these details. Please
+          do not reveal these details to fraudsters and imposters claiming to be
           calling on our behalf. Be vigilant and do not entertain phishing calls
           or emails.
         </p>
@@ -43,7 +43,7 @@ const FaqAccordian = () => {
       children: (
         <p>
           We will do our best to accommodate your request if the order is not
-          placed to the restaurant (Customer service number: +91 9896365642).
+          placed to the restaurant (Customer service number: +91 9876543210).
           Please note that we will have a right to charge a cancellation fee up
           to full order value to compensate our restaurant and delivery partners
           if your order has been confirmed.
@@ -52,7 +52,7 @@ const FaqAccordian = () => {
     },
     {
       key: "4",
-      label: "Will foodie be accountable for quality/quantity?",
+      label: "Will Instabites be accountable for quality/quantity?",
       children: (
         <p>
           Quantity and quality of the food is the restaurants' responsibility.
