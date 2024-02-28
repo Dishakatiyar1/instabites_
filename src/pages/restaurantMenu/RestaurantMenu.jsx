@@ -17,7 +17,6 @@ import {ARRAY_OF_MENU_OF_RESTAURANTS} from "../../../__mocks__/dataMock";
 
 const RestaurantMenu = () => {
   const resMenuData = ARRAY_OF_MENU_OF_RESTAURANTS;
-  console.log("res menu", resMenuData);
   const params = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,107 +24,67 @@ const RestaurantMenu = () => {
   const cart_Item = useSelector(state => state.cartslice.cart);
   const is_login_user = useSelector(state => state.userslice.currentLoginUser);
 
-  const {resId} = params;
+  if (!resMenuData || resMenuData.length === 0) return <MenuSkelton />;
 
-  // useEffect(() => {
-  //   fetchResMenuData();
-  // }, []);
-
-  // const fetchResMenuData = async () => {
-  //   const data = await fetch(`${RES_MENU_API}&restaurantId=${resId}`);
-  //   const json = await data.json();
-  //   setResMenuData(json);
-  //   console.log(json);
-  // };
-
-  if (resMenuData?.length == 0) return <MenuSkelton />;
-
-  const resData = resMenuData;
+  const resData = resMenuData[0].data;
+  const {name, labels, avgRating, menu} = resData;
 
   const handleCart = item => {
     if (is_login_user) {
-      dispatch(addTocart(item?.card?.info));
+      dispatch(addTocart(item));
       dispatch(setCurremtRestaurant(resData));
     } else {
       navigate("/login");
     }
   };
 
-  const food_item =
-    resMenuData?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards
-      .filter(item => item?.card?.card?.itemCards !== undefined)
-      .map((item, index) => {
-        return {
-          key: `${index + 1}`,
-          label: `${item?.card?.card?.title} (${item?.card?.card?.itemCards.length})`,
-          children: item?.card?.card?.itemCards.map(item => {
-            const item_data = cart_Item?.find(
-              food => food.id === item?.card?.info?.id
-            );
-            const in_cart_item = item_data?.qty;
-            if (in_cart_item) {
-              item.card.info["qty"] = in_cart_item;
-            } else {
-              item.card.info["qty"] = 0;
-            }
-            return (
-              <div className="res-item-card" key={item?.card?.info?.id}>
-                <div className="res-item-card-left">
-                  <div
-                    className={`food-type-main ${
-                      item?.card?.info?.itemAttribute?.vegClassifier ===
-                      "NONVEG"
-                        ? "red"
-                        : "green"
-                    }`}
-                  >
-                    <div
-                      className={`food-type ${
-                        item?.card?.info?.itemAttribute?.vegClassifier ===
-                        "NONVEG"
-                          ? "red"
-                          : "green"
-                      }`}
-                    ></div>
-                  </div>
-                  <h3>{item?.card?.info?.name}</h3>
-                  <p>
-                    ₹
-                    {Math.trunc(
-                      parseInt(
-                        (item?.card?.info?.price
-                          ? item?.card?.info?.price
-                          : item?.card?.info?.defaultPrice) / 100
-                      )
-                    )}
-                  </p>
-                </div>
-                <div className="food-img">
-                  <img
-                    src={
-                      item?.card?.info?.imageId
-                        ? BASE_IMG_URL + item?.card?.info?.imageId
-                        : BASE_IMG_URL + resData?.cloudinaryImageId
-                    }
-                  />
-                  {item?.card?.info?.qty ? (
-                    <div className="button-wrap">
+  return (
+    <div className="resmenu-container">
+      <div className="res-menu-header">
+        <div className="res-header-left">
+          <h2>{name}</h2>
+          <p>{labels.find(label => label.title === "Address")?.message}</p>
+        </div>
+        <div className="res-header-right">
+          <div className="res-header-rating">
+            <StarFilled />
+            <span>{avgRating}</span>
+          </div>
+        </div>
+      </div>
+      <div className="res-menu-container">
+        {menu &&
+          Object.values(menu.items).map(item => (
+            <div className="res-item-card" key={item.id}>
+              <div className="res-item-card-left">
+                <h3>{item.name}</h3>
+                <p>₹{Math.trunc(item.price / 100)}</p>
+              </div>
+              <div className="food-img">
+                <img
+                  src={
+                    BASE_IMG_URL +
+                    (item.cloudinaryImageId || resData.cloudinaryImageId)
+                  }
+                  alt={item.name}
+                />
+                <div className="button-wrap">
+                  {item?.qty > 1 ? (
+                    <>
                       <span
                         className="item-button"
-                        onClick={() => dispatch(addTocart(item?.card?.info))}
-                      >
-                        +
-                      </span>
-                      <span className="item-qty">{item?.card?.info?.qty}</span>
-                      <span
-                        className="item-button"
-                        onClick={() =>
-                          dispatch(removeFromcart(item?.card?.info))
-                        }
+                        onClick={() => dispatch(removeFromcart(item))}
                       >
                         -
                       </span>
-                    </div>
+                      <span className="item-qty">{item?.qty}</span>
+                      <span
+                        className="item-button"
+                        onClick={() => dispatch(addTocart(item))}
+                      >
+                        +
+                      </span>
+                    </>
                   ) : (
                     <div
                       className="add-item-button"
@@ -136,34 +95,8 @@ const RestaurantMenu = () => {
                   )}
                 </div>
               </div>
-            );
-          }),
-        };
-      });
-
-  const items = food_item;
-
-  return (
-    <div className="resmenu-container">
-      <div className="res-menu-header">
-        <div className="res-header-left">
-          <h2>{resData?.name}</h2>
-          <p>{resData?.labels[1].message}</p>
-        </div>
-        <div className="res-header-right">
-          <div className="res-header-rating">
-            <StarFilled />
-            <span>{resData?.avgRating}</span>
-          </div>
-        </div>
-      </div>
-      <div className="res-menu-container">
-        <Collapse
-          defaultActiveKey={["1"]}
-          ghost
-          items={items}
-          expandIconPosition="end"
-        />
+            </div>
+          ))}
       </div>
     </div>
   );

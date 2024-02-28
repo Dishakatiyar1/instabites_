@@ -1,20 +1,20 @@
 import React from "react";
 import "./cart.css";
-import { BASE_IMG_URL } from "../../utils/constant";
-import { useSelector, useDispatch } from "react-redux";
-import { EmptyCart } from "../../components";
-import { addTocart, removeFromcart } from "../../redux/slices/cartslice";
-import { useNavigate } from "react-router-dom";
+import {BASE_IMG_URL} from "../../utils/constant";
+import {useSelector, useDispatch} from "react-redux";
+import {EmptyCart} from "../../components";
+import {addTocart, removeFromcart} from "../../redux/slices/cartslice";
+import {useNavigate} from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const cart_item = useSelector((state) => state.cartslice.cart);
+  const cart_item = useSelector(state => state.cartslice.cart);
   const current_login_user = useSelector(
-    (state) => state.userslice.currentLoginUser
+    state => state.userslice.currentLoginUser
   );
   const currentRestaurant = useSelector(
-    (state) => state.cartslice.currentRestaurant
+    state => state.cartslice.currentRestaurant
   );
 
   const delivery_fee = currentRestaurant?.feeDetails?.totalFee / 100;
@@ -24,7 +24,7 @@ const Cart = () => {
     0
   );
   const pay_amount = delivery_fee + order_total;
-  const { cloudinaryImageId, name, city } = currentRestaurant;
+  const {cloudinaryImageId, name, city} = currentRestaurant;
 
   const handlePlaceOrder = () => {
     navigate("/payment");
@@ -48,7 +48,7 @@ const Cart = () => {
                 <div className="cart-underline"></div>
               </div>
             </div>
-            {cart_item.map((item) => {
+            {cart_item.map(item => {
               return (
                 <div className="cart-item-bottom" key={item?.id}>
                   <div className="cart-item-name">
