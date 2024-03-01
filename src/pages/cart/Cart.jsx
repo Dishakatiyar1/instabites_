@@ -17,7 +17,7 @@ const Cart = () => {
     state => state.cartslice.currentRestaurant
   );
 
-  const delivery_fee = currentRestaurant?.feeDetails?.totalFee / 100;
+  const delivery_fee = 40;
   const order_total = cart_item.reduce(
     (a, item) =>
       a + (item?.qty * (item?.price ? item?.price : item?.defaultPrice)) / 100,

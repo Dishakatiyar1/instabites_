@@ -1,10 +1,10 @@
 import React from "react";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import {Elements} from "@stripe/react-stripe-js";
+import {loadStripe} from "@stripe/stripe-js";
 import CheckoutForm from "../../components/checkoutForm/CheckoutForm";
 
 const stripePromise = loadStripe(
-  "pk_test_51BTUDGJAJfZb9HEBwDg86TN1KNprHjkfipXmEDMb0gSCassK5T3ZfxsAbcgKVmAIXF7oZ6ItlZZbXO6idTHE67IM007EwQ4uN3"
+  "pk_test_51OohirSEATjoSQRiGFDQQovsv39ziuD0u6qSGNcVpXRQTyUpaXaVDzyoCP0hHRcG377jUCYb8Oocva7QHf3OGcRi00ynAuMGaZ"
 );
 
 const Cartpayment = () => {

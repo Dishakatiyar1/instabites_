@@ -4,7 +4,7 @@
   "description": "This is food odering app, develop in react from scratch using parcel",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "build": "parcel build src/index.html --no-source-maps",
     "test": "jest --watchAll"
   },
   "keywords": [
