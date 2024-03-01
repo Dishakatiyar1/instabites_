@@ -1,16 +1,16 @@
 export const userData = [
   {
     id: 1,
-    name: "Pritesh Makasana",
-    email: "pritesh@gmail.com",
-    password: "Pritesh@123",
-    confirm_password: "Pritesh@123",
+    name: "Disha Katiyar",
+    email: "disha@gmail.com",
+    password: "Disha@123",
+    confirm_password: "Disha@123",
   },
   {
     id: 2,
-    name: "Mitul Makasana",
-    email: "mitul@gmail.com",
-    password: "Mitul@123",
-    confirm_password: "Mitul@123",
+    name: "Divyansh Katiyar",
+    email: "divyansh@gmail.com",
+    password: "Divyansh@123",
+    confirm_password: "Divyansh@123",
   },
 ];

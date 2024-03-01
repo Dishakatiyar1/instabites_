@@ -1,17 +1,17 @@
 import React from "react";
 import "./order.css";
-import { useDispatch, useSelector } from "react-redux";
-import { setEmptyCurrentOrder } from "../../redux/slices/orderslice";
-import { BASE_IMG_URL } from "../../utils/constant";
+import {useDispatch, useSelector} from "react-redux";
+import {setEmptyCurrentOrder} from "../../redux/slices/orderslice";
+import {BASE_IMG_URL} from "../../utils/constant";
 import OrderImage from "../../assets/images/empty-order.jpg";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 const Order = () => {
   const dispatch = useDispatch();
 
-  const current_order = useSelector((state) => state.orderslice.currentOrder);
-  const current_res = useSelector((state) => state.cartslice.currentRestaurant);
-  const delivery_fee = current_res?.feeDetails?.totalFee / 100;
+  const current_order = useSelector(state => state.orderslice.currentOrder);
+  const current_res = useSelector(state => state.cartslice.currentRestaurant);
+  const delivery_fee = 40;
   const order_total = current_order.reduce(
     (a, item) =>
       a + (item?.qty * (item?.price ? item?.price : item?.defaultPrice)) / 100,
